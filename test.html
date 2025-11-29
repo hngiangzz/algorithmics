@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Code Editor with Toolbar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Top bar -->
+    <div class="topbar">
+      <button class="run">Run</button>
+      <button class="stop">Stop</button>
+    </div>
+
+    <!-- Main area -->
+    <div class="main">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h2>Files</h2>
+        <ul>
+          <li data-file="index.html">index.html</li>
+          <li data-file="style.css">style.css</li>
+          <li data-file="script.js">script.js</li>
+          <li data-file="README.md">README.md</li>
+        </ul>
+      </div>
+
+      <!-- Editor -->
+      <div class="editor">
+        <textarea id="editorArea" spellcheck="false">
+// Write your code here...
+
+function helloWorld() {
+    console.log("Hello, World!");
+}
+        </textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sample file contents
+    const fileContents = {
+      "index.html": `<!DOCTYPE html>
+<html>
+<head>
+  <title>My Page</title>
+</head>
+<body>
+  <h1>Hello World</h1>
+</body>
+</html>`,
+
+      "style.css": `body {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  font-family: Consolas, monospace;
+}`,
+
+      "script.js": `function helloWorld() {
+  console.log("Hello, World!");
+}
+helloWorld();`,
+
+      "README.md": `# Project Title
+This is a simple demo project.
+Click files in the sidebar to load their content into the editor.`
+    };
+
+    // Attach click events to sidebar items
+    document.querySelectorAll(".sidebar ul li").forEach(item => {
+      item.addEventListener("click", () => {
+        const fileName = item.getAttribute("data-file");
+        const editor = document.getElementById("editorArea");
+        editor.value = fileContents[fileName] || "// Empty file";
+      });
+    });
+  </script>
+</body>
+</html>

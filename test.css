@@ -23,7 +23,7 @@ body {
   border-bottom: 1px solid #222;
 }
 
-.topbar button.run {
+.topbar button {
   background-color: #0e639c;
   color: #fff;
   border: none;
@@ -35,12 +35,6 @@ body {
 
 .topbar button.stop {
   background-color: #d83b01;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
 }
 
 .topbar button:hover {
@@ -116,30 +110,4 @@ body {
 .editor textarea::-webkit-scrollbar-thumb {
   background-color: #3e3e42;
   border-radius: 5px;
-}
-
-/* Output area styling */
-#output {
-  background-color: #1e1e1e;
-  color: #d4d4d4;
-  border: 1px solid #333;
-  border-radius: 6px;
-  padding: 10px;
-  margin-top: 15px;
-  font-family: Consolas, Monaco, 'Courier New', monospace;
-  font-size: 14px;
-  line-height: 1.4;
-  height: 200px;
-  overflow-y: auto;
-  white-space: pre-wrap; /* wrap long lines */
-}
-
-/* Canvas for turtle graphics */
-#mycanvas {
-  margin-top: 15px;
-  background-color: #252526;
-  border: 1px solid #333;
-  border-radius: 6px;
-  width: 400px;
-  height: 300px;
 }

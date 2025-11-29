@@ -9,18 +9,42 @@
 <link rel="stylesheet" href="style.css">
 
 <body> 
-
-<h3>Try This</h3> 
-<form> 
+<div class="container">
+    <div class="topbar">
+        <button type="button" onclick="runit()" class="run">Run</button> 
+        <button type="button" onclick="stopit()" class="stop">Stop</button> 
+    </div>
+    <!-- Main area -->
+    <div class="main">
+      <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Files</h2>
+            <ul>
+                <li onclick="hello()">hello.py</li>
+                <li onclick="game()">game.py</li>
+                <li>task.py</li>
+                <li onclick="read()">README.md</li>
+            </ul>
+        </div>
+        <!-- Editor -->
+      <div class="editor">
+        <textarea id="yourcode" cols="40" rows="10">
+# Open the files to start coding
+        </textarea><br /> 
+        <pre id="output" ></pre> 
+        <!-- If you want turtle graphics include a canvas
+        <div id="mycanvas"></div> 
+    -->
+      </div>
+    </div>
+<!--<form> 
 <textarea id="yourcode" cols="40" rows="10">
 print("Hello World")
 </textarea><br /> 
-<button type="button" onclick="runit()">Run</button> 
-<button type="button" onclick="stopit()">Stop</button> 
 </form> 
 <pre id="output" ></pre> 
-<!-- If you want turtle graphics include a canvas -->
 <div id="mycanvas"></div> 
+-->
 
 <script type="text/javascript"> 
 // output functions are configurable.  This one just appends some text
@@ -34,6 +58,38 @@ function builtinRead(x) {
             throw "File not found: '" + x + "'";
     return Sk.builtinFiles["files"][x];
 }
+// Sample file contents
+    const fileContents = {
+      "hello.py": `print("Hello world!")`,
+      "game.py" : `question = input('Greetings! How may I help you in this fine day? (type stop to end, otherwise type continue)')
+while question != 'stop':
+    if question == 'continue':
+        print("Im your guidance for today, you can call me Reo if you'd like to!")
+    elif question == "What's the strangest thing in your refrigerator?":
+        print("A dead rat. I think it was one of my friend's rat, please don't tell them I found their pet dead in my fridge.")
+    elif question == 'Do you eat or drink soup?':
+        print('What kind of question is that?! Are you okay? Its not too late to ask for help.')
+    question = input('Greetings! How may I help you in this fine day? (type stop to end)')`,
+      "README.md": `These are all sample files that you can edit and modify.
+Click files in the sidebar to load their content into the editor.`
+    }
+
+// Function for each file
+function hello() {
+    const editor = document.getElementById("yourcode");
+    editor.value = fileContents["hello.py"];
+}
+
+function game() {
+    const editor = document.getElementById("yourcode");
+    editor.value = fileContents["game.py"];
+}
+
+function read() {
+    const editor = document.getElementById("yourcode");
+    editor.value = fileContents["README.md"];
+}
+
 
 // Here's everything you need to run a python program in skulpt
 // grab the code from your textarea
