@@ -22,7 +22,7 @@
             <ul>
                 <li onclick="hello()">hello.py</li>
                 <li onclick="game()">game.py</li>
-                <li>task.py</li>
+                <li onclick="task()">task.py</li>
                 <li onclick="read()">README.md</li>
             </ul>
         </div>
@@ -31,7 +31,8 @@
         <textarea id="yourcode" cols="40" rows="10">
 # Open the files to start coding
         </textarea><br /> 
-        <pre id="output" ></pre> 
+        <!-- <pre id="output" ></pre> -->
+        <textarea id="console"></textarea>
         <!-- If you want turtle graphics include a canvas
         <div id="mycanvas"></div> 
     -->
@@ -44,6 +45,34 @@ print("Hello World")
 </form> 
 <pre id="output" ></pre> 
 <div id="mycanvas"></div> 
+game 
+while question != 'stop':
+    if question == 'continue':
+        print("Im your guidance for today, you can call me Reo if you'd like to!")
+    elif question == "What's the strangest thing in your refrigerator?":
+        print("A dead rat. I think it was one of my friend's rat, please don't tell them their pet is dead and in my fridge.")
+    elif question == 'Do you eat or drink soup?':
+        print('What kind of question is that?! Are you okay? Its not too late to ask for help.')
+    question = input('Greetings! How may I help you in this fine day? (type stop to end)')`
+
+runit code
+line_number = 0;
+
+   var prog = document.getElementById("yourcode").value; 
+   var mypre = document.getElementById("output"); 
+   mypre.innerHTML = ''; 
+   Sk.pre = "output";
+   Sk.configure({output:outf, read:builtinRead, inputfun: inputFunction, inputfunTakesPrompt: false}); 
+   (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas';
+   var myPromise = Sk.misceval.asyncToPromise(function() {
+       return Sk.importMainWithBody("<stdin>", false, prog, true);
+   });
+   myPromise.then(function(mod) {
+       console.log('success');
+   },
+       function(err) {
+       console.log(err.toString());
+   });
 -->
 
 <script type="text/javascript"> 
@@ -61,19 +90,14 @@ function builtinRead(x) {
 // Sample file contents
     const fileContents = {
       "hello.py": `print("Hello world!")`,
-      "game.py" : `question = input('Greetings! How may I help you in this fine day? (type stop to end, otherwise type continue)')
-while question != 'stop':
-    if question == 'continue':
-        print("Im your guidance for today, you can call me Reo if you'd like to!")
-    elif question == "What's the strangest thing in your refrigerator?":
-        print("A dead rat. I think it was one of my friend's rat, please don't tell them I found their pet dead in my fridge.")
-    elif question == 'Do you eat or drink soup?':
-        print('What kind of question is that?! Are you okay? Its not too late to ask for help.')
-    question = input('Greetings! How may I help you in this fine day? (type stop to end)')`,
+      "game.py" : `x = input()
+print(x*2)`,
+    "task.py": `Write a code using input`,
       "README.md": `These are all sample files that you can edit and modify.
 Click files in the sidebar to load their content into the editor.`
     }
 
+    
 // Function for each file
 function hello() {
     const editor = document.getElementById("yourcode");
@@ -84,10 +108,21 @@ function game() {
     const editor = document.getElementById("yourcode");
     editor.value = fileContents["game.py"];
 }
+function task() {
+    const editor = document.getElementById("yourcode");
+    editor.value = fileContents["task.py"];
+}
 
 function read() {
     const editor = document.getElementById("yourcode");
     editor.value = fileContents["README.md"];
+}
+let line_number = 0;
+
+function inputFunction(promptText) {
+    let cur_input = myInput.value.split("\n")[line_number];
+    line_number++;
+    return cur_input;
 }
 
 
@@ -96,13 +131,42 @@ function read() {
 // get a reference to your pre element for output
 // configure the output function
 // call Sk.importMainWithBody()
-function runit() { 
+function runit() {
+   const textarea = document.getElementById("console");
    var prog = document.getElementById("yourcode").value; 
-   var mypre = document.getElementById("output"); 
-   mypre.innerHTML = ''; 
-   Sk.pre = "output";
-   Sk.configure({output:outf, read:builtinRead}); 
-   (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'mycanvas';
+
+    // Clear console for new run
+    textarea.value = "";
+
+    Sk.configure({
+        output: function(text) {
+            textarea.value += text;
+        },
+
+        inputfunTakesPrompt: true,
+        inputfun: function(prompt) {
+            return new Promise(resolve => {
+                textarea.value += prompt;
+// Wait for user to press Enter
+                function handler(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+
+                        // Get the last line typed
+                        const lines = textarea.value.split("\n");
+                        const userInput = lines[lines.length - 1];
+
+                        textarea.removeEventListener("keydown", handler);
+                        resolve(userInput);
+                        textarea.value += '\n';
+                    }
+                }
+
+                textarea.addEventListener("keydown", handler);
+            });
+        }
+    });
+
    var myPromise = Sk.misceval.asyncToPromise(function() {
        return Sk.importMainWithBody("<stdin>", false, prog, true);
    });

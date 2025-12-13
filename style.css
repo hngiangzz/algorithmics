@@ -134,6 +134,21 @@ body {
   white-space: pre-wrap; /* wrap long lines */
 }
 
+#myInput {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 15px;
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  height: 200px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
 /* Canvas for turtle graphics */
 #mycanvas {
   margin-top: 15px;
@@ -142,4 +157,19 @@ body {
   border-radius: 6px;
   width: 400px;
   height: 300px;
+}
+
+#console {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 15px;
+  font-family: Consolas, Monaco, 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  height: 200px;
+  overflow-y: auto;
+  white-space: pre-wrap;
 }
