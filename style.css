@@ -43,6 +43,16 @@ body {
   font-size: 13px;
 }
 
+.topbar button.check {
+  background-color: green;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
 .topbar button:hover {
   opacity: 0.85;
 }

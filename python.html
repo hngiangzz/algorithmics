@@ -13,6 +13,7 @@
     <div class="topbar">
         <button type="button" onclick="runit()" class="run">Run</button> 
         <button type="button" onclick="stopit()" class="stop">Stop</button> 
+        <button type="button" style="visibility: hidden;" onclick="checkit()" class="check">Check</button> 
     </div>
     <!-- Main area -->
     <div class="main">
@@ -74,7 +75,7 @@ line_number = 0;
        console.log(err.toString());
    });
 -->
-
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 <script type="text/javascript"> 
 // output functions are configurable.  This one just appends some text
 // to a pre element.
@@ -91,8 +92,9 @@ function builtinRead(x) {
     const fileContents = {
       "hello.py": `print("Hello world!")`,
       "game.py" : `x = input()
-print(x*2)`,
-    "task.py": `Write a code using input`,
+my_integer = int(x)
+print(my_integer*2)`,
+    "task.py": `Write a code that prints dog`,
       "README.md": `These are all sample files that you can edit and modify.
 Click files in the sidebar to load their content into the editor.`
     }
@@ -102,20 +104,28 @@ Click files in the sidebar to load their content into the editor.`
 function hello() {
     const editor = document.getElementById("yourcode");
     editor.value = fileContents["hello.py"];
+    var button = document.querySelector(".check");
+    button.style.visibility = "hidden";
 }
 
 function game() {
     const editor = document.getElementById("yourcode");
     editor.value = fileContents["game.py"];
+    var button = document.querySelector(".check");
+    button.style.visibility = "hidden";
 }
 function task() {
     const editor = document.getElementById("yourcode");
     editor.value = fileContents["task.py"];
+    var button = document.querySelector(".check");
+    button.style.visibility = "visible";
 }
 
 function read() {
     const editor = document.getElementById("yourcode");
     editor.value = fileContents["README.md"];
+    var button = document.querySelector(".check");
+    button.style.visibility = "hidden";
 }
 let line_number = 0;
 
@@ -131,6 +141,65 @@ function inputFunction(promptText) {
 // get a reference to your pre element for output
 // configure the output function
 // call Sk.importMainWithBody()
+function checkit(){
+   const textarea = document.getElementById("console");
+   var prog = document.getElementById("yourcode").value; 
+
+    // Clear console for new run
+    textarea.value = "";
+
+    Sk.configure({
+        output: function(text) {
+            textarea.value += text;
+        },
+
+        inputfunTakesPrompt: true,
+        inputfun: function(prompt) {
+            return new Promise(resolve => {
+                textarea.value += prompt;
+// Wait for user to press Enter
+                function handler(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+
+                        // Get the last line typed
+                        const lines = textarea.value.split("\n");
+                        const userInput = lines[lines.length - 1];
+
+                        textarea.removeEventListener("keydown", handler);
+                        resolve(userInput);
+                        textarea.value += '\n';
+                    }
+                }
+
+                textarea.addEventListener("keydown", handler);
+            });
+        }
+    });
+
+   var myPromise = Sk.misceval.asyncToPromise(function() {
+       return Sk.importMainWithBody("<stdin>", false, prog, true);
+   });
+   myPromise.then(function(mod) {
+       console.log(textarea.value.length)
+       console.log('checked');
+       let evil = textarea.value.slice(0, -1);
+       if (evil === 'dog') {
+        confetti({
+            particleCount: 200,
+            spread: 360,
+            origin: { y: 0.6 }, // middle of the screen
+        });
+        textarea.value = 'Success!'
+       } else {
+        textarea.value = 'Failed..'
+       }
+   },
+       function(err) {
+       console.log(err.toString());
+   });
+}
+
 function runit() {
    const textarea = document.getElementById("console");
    var prog = document.getElementById("yourcode").value; 
@@ -185,9 +254,9 @@ function stopit() {
         codeArea.value = "";
     }
     // Clear the output area
-    var mypre = document.getElementById("output");
+    var mypre = document.getElementById("console");
     if (mypre) {
-        mypre.innerHTML = "Execution stopped. Code cleared.";
+        mypre.value = "Execution stopped. Code cleared.";
     }
     // Reset Skulpt state (optional safeguard)
     Sk.execLimit = 0; // prevents further execution
