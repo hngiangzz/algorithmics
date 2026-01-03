@@ -14,6 +14,7 @@
         <button type="button" onclick="runit()" class="run">Run</button> 
         <button type="button" onclick="stopit()" class="stop">Stop</button> 
         <button type="button" style="visibility: hidden;" onclick="checkit()" class="check">Check</button> 
+        <button type="button" onclick="toggleit()" class="theme-toggle">Toggle</button> 
     </div>
     <!-- Main area -->
     <div class="main">
@@ -26,6 +27,7 @@
                 <li onclick="task()">task.py</li>
                 <li onclick="read()">README.md</li>
             </ul>
+            <button type="button" onclick="makeit()" class="new">+ New file</button> 
         </div>
         <!-- Editor -->
       <div class="editor">
@@ -74,6 +76,9 @@ line_number = 0;
        function(err) {
        console.log(err.toString());
    });
+   x = int(input())
+    result = x/2
+    print(int(result))
 -->
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 <script type="text/javascript"> 
@@ -91,10 +96,10 @@ function builtinRead(x) {
 // Sample file contents
     const fileContents = {
       "hello.py": `print("Hello world!")`,
-      "game.py" : `x = input()
-my_integer = int(x)
-print(my_integer*2)`,
-    "task.py": `Write a code that prints dog`,
+      "game.py" : `x = float(input())
+result = x/2
+print(result)`,
+    "task.py": `Write a code that prints cat`,
       "README.md": `These are all sample files that you can edit and modify.
 Click files in the sidebar to load their content into the editor.`
     }
@@ -184,7 +189,7 @@ function checkit(){
        console.log(textarea.value.length)
        console.log('checked');
        let evil = textarea.value.slice(0, -1);
-       if (evil === 'dog') {
+       if (evil === 'cat') {
         confetti({
             particleCount: 200,
             spread: 360,
@@ -247,6 +252,27 @@ function runit() {
    });
 } 
 
+function makeit() {
+    const editor = document.getElementById("yourcode");
+    const consoleArea = document.getElementById("console");
+    const checkBtn = document.querySelector(".check");
+    const sidebarList = document.querySelector(".sidebar ul");
+    const newFile = document.createElement("li");
+    newFile.textContent = "new" + (sidebarList.children.length) + ".py"; 
+    newFile.onclick = () => { 
+        editor.value = " "; 
+        checkBtn.style.visibility = "hidden"; 
+    }; 
+    sidebarList.appendChild(newFile);
+}
+
+function toggleit() {
+  document.body.classList.toggle('light-theme');
+  document.addEventListener("DOMContentLoaded", () => { 
+  const toggleBtn = document.querySelector(".theme-toggle"); 
+  toggleBtn.addEventListener("click", () => { 
+  document.body.classList.toggle("light-theme"); }); });
+}
 function stopit() {
     // Clear the code input area
     var codeArea = document.getElementById("yourcode");

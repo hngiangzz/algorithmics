@@ -3,7 +3,7 @@ body {
   margin: 0;
   font-family: Consolas, Monaco, 'Courier New', monospace;
   background-color: #1e1e1e;
-  color: #d4d4d4;
+  color: #e0e0e0;
 }
 
 /* Layout: vertical stack */
@@ -15,46 +15,41 @@ body {
 
 /* Top bar */
 .topbar {
-  background-color: #333;
+  background: linear-gradient(90deg, #2d2d30, #1e1e1e);
   padding: 8px 12px;
   display: flex;
   align-items: center;
   gap: 10px;
-  border-bottom: 1px solid #222;
+  border-bottom: 2px solid #ffcc00;
+}
+
+.topbar button {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: transform 0.15s ease, opacity 0.2s ease;
 }
 
 .topbar button.run {
   background-color: #0e639c;
   color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
 }
 
 .topbar button.stop {
   background-color: #d83b01;
   color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
 }
 
 .topbar button.check {
-  background-color: green;
+  background-color: #28a745;
   color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
 }
 
 .topbar button:hover {
-  opacity: 0.85;
+  opacity: 0.9;
+  transform: scale(1.05);
 }
 
 /* Main area: sidebar + editor */
@@ -66,16 +61,18 @@ body {
 /* Sidebar (file directory) */
 .sidebar {
   width: 220px;
-  background-color: #252526;
-  border-right: 1px solid #333;
+  background: linear-gradient(180deg, #252526, #2d2d30);
+  border-right: 2px solid #444;
   padding: 10px;
   box-sizing: border-box;
 }
 
 .sidebar h2 {
   font-size: 14px;
-  color: #ccc;
+  color: #ffcc00;
   margin: 0 0 10px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
 }
 
 .sidebar ul {
@@ -89,16 +86,38 @@ body {
   color: #d4d4d4;
   cursor: pointer;
   border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sidebar ul li:hover {
-  background-color: #3e3e42;
+  background-color: #007acc;
+  color: #fff;
 }
+
+.sidebar button.new {
+  margin-top: 12px;
+  width: 100%;
+  background-color: #007acc;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.sidebar button.new {
+  background-color: #005a8c;
+  transform: scale(1.03);
+}
+
 
 /* Editor */
 .editor {
   flex: 1;
-  background-color: #1e1e1e;
+  background-color: #ffffff00;
   display: flex;
   flex-direction: column;
 }
@@ -106,7 +125,7 @@ body {
 .editor textarea {
   flex: 1;
   background-color: #1e1e1e;
-  color: #d4d4d4;
+  color: #e0e0e0;
   border: none;
   outline: none;
   resize: none;
@@ -114,6 +133,7 @@ body {
   font-size: 14px;
   line-height: 1.4;
   font-family: Consolas, Monaco, 'Courier New', monospace;
+  border-left: 2px solid #444;
 }
 
 /* Scrollbar styling */
@@ -124,30 +144,15 @@ body {
   background: #252526;
 }
 .editor textarea::-webkit-scrollbar-thumb {
-  background-color: #3e3e42;
+  background-color: #007acc;
   border-radius: 5px;
 }
 
 /* Output area styling */
-#output {
+#output, #myInput, #console {
   background-color: #1e1e1e;
-  color: #d4d4d4;
-  border: 1px solid #333;
-  border-radius: 6px;
-  padding: 10px;
-  margin-top: 15px;
-  font-family: Consolas, Monaco, 'Courier New', monospace;
-  font-size: 14px;
-  line-height: 1.4;
-  height: 200px;
-  overflow-y: auto;
-  white-space: pre-wrap; /* wrap long lines */
-}
-
-#myInput {
-  background-color: #1e1e1e;
-  color: #d4d4d4;
-  border: 1px solid #333;
+  color: #e0e0e0;
+  border: 1px solid #444;
   border-radius: 6px;
   padding: 10px;
   margin-top: 15px;
@@ -157,29 +162,93 @@ body {
   height: 200px;
   overflow-y: auto;
   white-space: pre-wrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
 /* Canvas for turtle graphics */
 #mycanvas {
   margin-top: 15px;
   background-color: #252526;
-  border: 1px solid #333;
+  border: 2px solid #007acc;
   border-radius: 6px;
   width: 400px;
   height: 300px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
-#console {
-  background-color: #1e1e1e;
-  color: #d4d4d4;
-  border: 1px solid #333;
-  border-radius: 6px;
-  padding: 10px;
-  margin-top: 15px;
-  font-family: Consolas, Monaco, 'Courier New', monospace;
-  font-size: 14px;
-  line-height: 1.4;
-  height: 200px;
-  overflow-y: auto;
-  white-space: pre-wrap;
+/* Light theme */ 
+/* Light Theme Variant */
+body.light-theme {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* Top bar */
+body.light-theme .topbar {
+  background: linear-gradient(90deg, #ffcc00, #ff9900);
+  border-bottom: 2px solid #e69500;
+}
+
+body.light-theme .topbar button.run {
+  background-color: #007acc;
+  color: #fff;
+}
+body.light-theme .topbar button.stop {
+  background-color: #d83b01;
+  color: #fff;
+}
+body.light-theme .topbar button.check {
+  background-color: #28a745;
+  color: #fff;
+}
+
+/* Sidebar */
+body.light-theme .sidebar {
+  background: linear-gradient(180deg, #fafafa, #eaeaea);
+  border-right: 2px solid #ddd;
+}
+
+body.light-theme .sidebar h2 {
+  color: #007acc;
+  border-bottom: 1px solid #ccc;
+}
+
+body.light-theme .sidebar ul li {
+  color: #333;
+}
+body.light-theme .sidebar ul li:hover {
+  background-color: #007acc;
+  color: #fff;
+}
+
+/* Editor */
+body.light-theme .editor textarea {
+  background-color: #ffffff;
+  color: #333;
+  border-left: 2px solid #ddd;
+}
+
+/* Scrollbar */
+body.light-theme .editor textarea::-webkit-scrollbar-track {
+  background: #eee;
+}
+body.light-theme .editor textarea::-webkit-scrollbar-thumb {
+  background-color: #007acc;
+}
+
+/* Output areas */
+body.light-theme #output,
+body.light-theme #myInput,
+body.light-theme #console {
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Canvas */
+body.light-theme #mycanvas {
+  background-color: #fafafa;
+  border: 2px solid #007acc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }

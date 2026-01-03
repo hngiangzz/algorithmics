@@ -11,6 +11,7 @@
     <div class="topbar">
       <button class="run">Run</button>
       <button class="stop">Stop</button>
+      <button class="theme-toggle">Toggle</button>
     </div>
 
     <!-- Main area -->
@@ -40,6 +41,14 @@ function helloWorld() {
   </div>
 
   <script>
+    document.addEventListener("DOMContentLoaded", () => { 
+    const toggleBtn = document.querySelector(".theme-toggle"); 
+    toggleBtn.addEventListener("click", () => { 
+    document.body.classList.toggle("light-theme"); }); });
+
+    function toggleTheme() {
+  document.body.classList.toggle('light-theme');
+}
     // Sample file contents
     const fileContents = {
       "index.html": `<!DOCTYPE html>
